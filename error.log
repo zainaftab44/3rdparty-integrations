@@ -1,0 +1,48 @@
+[Tue Feb 16 2021 01:55:38][127.0.0.1:36256][/product][INFO ][src\controllers\ProductController::index(45)] Select * from first_table where name like 'z%' order by name desc
+[Tue Feb 16 2021 01:55:38][127.0.0.1:36256][/product][INFO ][src\controllers\ProductController::index(45)] Printing received array
+Array
+(
+    [0] => Array
+        (
+            [name] => zain1613383813
+            [email] => 1613383813@.com
+        )
+
+    [1] => Array
+        (
+            [name] => zain1613240546
+            [email] => 1613240546@.com
+        )
+
+    [2] => Array
+        (
+            [name] => zain1613240472
+            [email] => 1613242607@gmail.com
+        )
+
+)
+
+[Tue Feb 16 2021 01:56:25][127.0.0.1:36286][/product][INFO ][src\controllers\ProductController::index(45)] Select * from first_table where name like 'z%' order by name desc
+[Tue Feb 16 2021 01:56:25][127.0.0.1:36286][/product][INFO ][src\controllers\ProductController::index(45)] Printing received array
+Array
+(
+    [0] => Array
+        (
+            [name] => zain1613383813
+            [email] => 1613383813@.com
+        )
+
+    [1] => Array
+        (
+            [name] => zain1613240546
+            [email] => 1613240546@.com
+        )
+
+    [2] => Array
+        (
+            [name] => zain1613240472
+            [email] => 1613242607@gmail.com
+        )
+
+)
+
