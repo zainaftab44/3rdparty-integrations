@@ -6,9 +6,15 @@ error_reporting(~E_ALL);
 $env = 'DEV';
 
 //Logging related constants
-// define('LOG_LOCATION', 'php://stderr');
-define('LOG_LOCATION', '/var/log/php/error.log');
+define('LOG_LOCATION', 'php://stderr');
+// define('LOG_LOCATION', '/var/log/php/error.log');
 define('TIMEZONE', 'Asia/Karachi');
+
+//Default message in case route not found or nothing received from route
+define('DEFAULT_MESSAGE',"Unable to load resource");
+//Default status in case route not found or nothing received from route
+define('DEFAULT_STATUS',"Failed");
+
 
 if ($env == 'DEV') {
     //database configuration

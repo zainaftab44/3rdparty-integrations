@@ -8,7 +8,7 @@ use function PHPSTORM_META\type;
 /**
  * @author Zain Aftab
  * @copyright Zain Aftab - 2021
- *  
+ *
  * Logger
  * Basic class to log messasges/data at different levels
  */
@@ -37,16 +37,28 @@ class Logger
     protected function __clone()
     {}
 
+    /**
+     * Returns a created/new logger instance
+     *
+     * @return Logger
+     */
     public static function getInstance()
     {
         self::$instance = empty(self::$instance) ? new static() : self::$instance;
         return self::$instance;
     }
 
+    /**
+     * Logs data to LOG_LOCATION
+     *
+     * @param string $level log level
+     * @param mixed $data any number of strings/objects/arrays to log
+     *
+     * @return void
+     */
     protected function write($level, $data)
     {
-        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
-        // $prepend = "[" . date($this->timestamp) . "][" . $level . "][" . $trace[2]['class'] . ":" . $trace[1]['line'] . "][" . $trace[2]['function'] . "]";
+        $trace   = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
         $now     = new DateTime("now", new DateTimeZone(TIMEZONE));
         $prepend = "[" . $now->format($this->timestamp) . "][$_SERVER[REMOTE_ADDR]:$_SERVER[REMOTE_PORT]][$_SERVER[REQUEST_URI]][" . $level . " ][" . $trace[2]['class'] . "::" . $trace[2]['function'] . "(" . $trace[1]['line'] . ")]";
 

@@ -9,13 +9,13 @@ Lets have a look at how easy it is to use FastREST.
 
 ## Basics of FastREST
 
-It is very simple to create API using fast rest. You just need controller class.
-
 ### How to run
 So FastREST is much easier to execute/deploy than other php frameworks. You can even use the basic PHP server to use FastREST to its full executing following command in FastRest dir.
 
     $ php -S localhost:8000 index.php
+
 Now you can start working with controllers and actions for further development.
+
 ### Controller
 
 You need to create a controller class in controllers dir with filename as `nameController.php` for example you want to create controller class for handling APIs related to products then you would need to create ProductController class with filename ProductController.php in controllers dir. The controller name like Product for the above example will act as the route `/product/[actionname]`. The namespace for  controller needs to be src\controllers for router to auto create route for it. 
@@ -30,7 +30,9 @@ A basic skeleton of controller is as follows
 
 ### Action
 
-Action is a static function in your controller class with name like `indexAction` which for ProductController will point to route `/product/index` or `/product`. In the route the extra Action in the function name gets trimmed. The action name gets registered by the router if it is created as static function in the controller class and will be called by router automatically.
+Action is a static function in your controller class with name like `indexAction` which for ProductController will point to route `/product/index` or `/product`. In the route the extra Action in the function name gets trimmed. The action name gets registered by the router if it is created as static function in the controller class and will be called by router automatically. 
+
+**Note:** Actions must return an array to be sent as response. If no array is returned from action then default response is returned. 
 
     <?php
     namespace src\controllers;
@@ -91,7 +93,8 @@ A config file is created in config/config.php for keeping constants that would b
 1. First of all there is php default error_reporting which is disabled in config you can set it enabled as per your use case.
 2. env variable is added to allow you to add different configurations for different environments your APIs will be placed in.
 3. Logging constants for location where the logger should output and the timezone are defined here. You can change the timezone as per your need and the log location from here.
-4.  Database constants are added for creating db connection string for PHP PDO. You can use any db for DBTYPE (default is mysql) that is compatible with PDO.
+4. Default status/message returned in case the route is not found, some exception occurred or nothing is returned from Action.
+5.  Database constants are added for creating db connection string for PHP PDO. You can use any db for DBTYPE (default is mysql) that is compatible with PDO.
 
 ### Databases
 
@@ -108,4 +111,9 @@ The examples for usage of logger are shared in sample codes of [Action](#action)
 
 ## Future prospects
 Following are some things that might be updated for making FastREST more easier and efficient for devs  to create REST APIs in PHP.
+
+ - [ ] Database: Add all operators support in where clauses for CRUD methods.
+ - [ ] Database: Add support for joins for CRUD methods.
+ - [ ] Database: Add support for NoSQL
+ - [ ] Config: Get env from system/apache conf
 

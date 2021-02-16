@@ -5,16 +5,19 @@ use Exception;
 use PDO;
 use PDOException;
 
-
 /**
  * @author Zain Aftab
  * @copyright Zain Aftab - 2021
- *  
+ * 
  * Contains basic database functionality required for developing apis
  */
 class Database
 {
 
+    /**
+     * variable to keep the class instance
+     * @var Database
+     */
     private static $instance = null;
 
     protected $_conn;
@@ -28,6 +31,11 @@ class Database
     protected function __clone()
     {}
 
+    /**
+     * Returns a created/new Database class instance
+     *
+     * @return Database
+     */
     public static function getInstance()
     {
         self::$instance = empty(self::$instance) ? new static() : self::$instance;
@@ -39,12 +47,13 @@ class Database
      * @param string table table name of destination table
      * @param array data key-value pairs with keys as column names and values to insert data into
      *
+     * @return bool true if query executed successfully, otherwise false
      */
     public function insert($table, $data)
     {
         try {
             $columns = array_keys($data);
-            $values = array_values($data);
+            $values  = array_values($data);
 
             $queryc = implode(",", $columns);
             $queryv = ':' . implode(",:", $columns);
@@ -70,16 +79,18 @@ class Database
      * @param array data key-value pairs with keys as column names for respective values
      * @param array where key-value pairs with keys as column names for respective values
      *
+     * 
+     * @return bool true if query executed successfully, otherwise false
      */
     public function update($table, $data, $where)
     {
         try {
             $columns = array_keys($data);
 
-            $whereComon = array_intersect_assoc(array_keys($where), $columns);
+            $whereComon   = array_intersect_assoc(array_keys($where), $columns);
             $whereColumns = array_keys($where);
 
-            $values = array_values($data);
+            $values      = array_values($data);
             $whereValues = array_values($where);
 
             $queryc = "";
@@ -94,7 +105,7 @@ class Database
             }
 
             $query = "Update $table set $queryc where $queryw;";
-            $stmt = $this->_conn->prepare($query);
+            $stmt  = $this->_conn->prepare($query);
 
             foreach ($values as $ind => $value) {
                 $stmt->bindParam('' . $columns[$ind], ${$columns[$ind]});
@@ -115,12 +126,13 @@ class Database
      * @param string table table name of destination table
      * @param array where key-value pairs with keys as column names for respective values
      *
+     * @return bool true if query executed successfully, otherwise false
      */
     public function delete($table, $where)
     {
         try {
             $columns = array_keys($where);
-            $values = array_values($where);
+            $values  = array_values($where);
 
             $queryc = "";
 
@@ -151,16 +163,17 @@ class Database
      * @param array order key-value pair of index as column names and value as ASC/DESC
      * @param integer limit
      *
+     * @return array query result is fetched as array and is returned
      */
     public function select($table, $columns, $where, $order, $limit)
     {
         $query = "Select " . (empty($columns) ? '*' : implode(',', $columns)) . " from $table ";
 
         $whereColumns = array_keys($where);
-        $whereValues = array_values($where);
+        $whereValues  = array_values($where);
 
         $orderColumns = array_keys($order);
-        $orderValues = array_values($order);
+        $orderValues  = array_values($order);
 
         if (!empty($whereColumns)) {
             $query .= 'where ';
@@ -197,7 +210,7 @@ class Database
      * Takes a raw query and executes it.
      * @param string query Query to be executed on db
      *
-     * @return mixed|bool If query is select query then returns result data else returns true if query executed or false if execution failed or exception occurred
+     * @return array|bool If query is select query then returns result data else returns true if query executed or false if execution failed or exception occurred
      */
     public function query($query)
     {
@@ -211,7 +224,7 @@ class Database
                 }
             }
         } catch (Exception $e) {
-            
+
         }
         return false;
 
