@@ -1,6 +1,6 @@
 <?php
 //comment this out to enable php default logging
-error_reporting(~E_ALL);
+// error_reporting(~E_ALL);
 
 //To allow for multiple environments configuration
 $env = 'DEV';

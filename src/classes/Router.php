@@ -31,7 +31,7 @@ class Router
         //transforming route to repective action
         $path  = explode('/', $path);
         $class = '\\src\\controllers\\' . ucfirst($path[1]) . "Controller";
-        $func  = (empty($path[2]) ? "index" : $path[2]) . "Action";
+        $func  = (empty($path[2]) ? "index" : explode('?',$path[2])[0]) . "Action";
 
         try {
             $resp = call_user_func($class . "::" . $func);

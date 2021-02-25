@@ -3,7 +3,6 @@ namespace src\classes;
 
 use DateTime;
 use DateTimeZone;
-use function PHPSTORM_META\type;
 
 /**
  * @author Zain Aftab
@@ -62,14 +61,8 @@ class Logger
         $now     = new DateTime("now", new DateTimeZone(TIMEZONE));
         $prepend = "[" . $now->format($this->timestamp) . "][$_SERVER[REMOTE_ADDR]:$_SERVER[REMOTE_PORT]][$_SERVER[REQUEST_URI]][" . $level . " ][" . $trace[2]['class'] . "::" . $trace[2]['function'] . "(" . $trace[1]['line'] . ")]";
 
-        if (!empty($data)) {
-            fwrite($this->_file, $prepend . " $data[0]\n");
-        }
-
-        if (sizeof($data) > 1) {
-            for ($i = 1; $i < sizeof($data); $i++) {
-                fwrite($this->_file, $prepend . " Printing received " . (gettype($data[$i]) == 'object' ? get_class($data[$i]) . " Object" : gettype($data[$i])) . "\n" . print_r($data[$i], true) . "\n");
-            }
+        for ($i = 0; $i < sizeof($data); $i++) {
+            fwrite($this->_file, $prepend . " Printing received " . (gettype($data[$i]) == 'object' ? get_class($data[$i]) . " Object" : gettype($data[$i])) . "\n" . print_r($data[$i], true) . "\n");
         }
 
     }
@@ -81,7 +74,7 @@ class Logger
      *
      * @return void
      */
-    public function error($message, $data)
+    public function error($message, $data=null)
     {
         $this->write(self::ERROR, func_get_args());
     }
@@ -93,7 +86,7 @@ class Logger
      *
      * @return void
      */
-    public function warn($message, $data)
+    public function warn($message, $data=null)
     {
         $this->write(self::WARN, func_get_args());
     }
@@ -105,7 +98,7 @@ class Logger
      *
      * @return void
      */
-    public function notice($message, $data)
+    public function notice($message, $data=null)
     {
         $this->write(self::NOTICE, func_get_args());
     }
@@ -117,7 +110,7 @@ class Logger
      *
      * @return void
      */
-    public function alert($message, $data)
+    public function alert($message, $data=null)
     {
         $this->write(self::ALERT, func_get_args());
     }
@@ -129,7 +122,7 @@ class Logger
      *
      * @return void
      */
-    public function info($message, $data)
+    public function info($message, $data = null)
     {
         $this->write(self::INFO, func_get_args());
     }
@@ -141,7 +134,7 @@ class Logger
      *
      * @return void
      */
-    public function debug($message, $data)
+    public function debug($message, $data=null)
     {
         $this->write(self::DEBUG, func_get_args());
     }
