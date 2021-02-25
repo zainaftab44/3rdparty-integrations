@@ -8,7 +8,7 @@ use PDOException;
 /**
  * @author Zain Aftab
  * @copyright Zain Aftab - 2021
- * 
+ *
  * Contains basic database functionality required for developing apis
  */
 class Database
@@ -79,7 +79,7 @@ class Database
      * @param array data key-value pairs with keys as column names for respective values
      * @param array where key-value pairs with keys as column names for respective values
      *
-     * 
+     *
      * @return bool true if query executed successfully, otherwise false
      */
     public function update($table, $data, $where)
@@ -204,6 +204,32 @@ class Database
 
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
+    }
+
+    /**
+     * Takes a raw query and executes it.
+     * @param string $query Query to be executed on db
+     * @param mixed $params parameters for query
+     *
+     * @return array|bool If query is select query then returns result data else returns true if query executed or false if execution failed or exception occurred
+     */
+    public function preparedQuery($query, $params)
+    {
+        $stmt = $this->_conn->prepare($query);
+
+        try {
+            if ($stmt->execute($params)) {
+                if ($stmt->rowCount() > 0) {
+                    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                } else {
+                    return true;
+                }
+            }
+        } catch (Exception $e) {
+
+        }
+        return false;
+
     }
 
     /**

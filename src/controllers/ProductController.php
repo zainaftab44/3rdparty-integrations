@@ -4,11 +4,28 @@ namespace src\controllers;
 
 use src\classes\Database;
 use src\classes\Logger;
+use src\classes\Select;
 
 class ProductController
 {
 
     public static function indexAction()
+    {
+        $db     = Database::getInstance();
+        $logger = Logger::getInstance();
+
+        $query = new Select("first_table");
+        $logger->info($query->where("name like z%")->order('name', 'asc')->limit("1")->__toString());
+        $result = $db->preparedQuery($query->getQuery(), $query->getParams());
+        if (!empty($result)) {
+            return array('status' => "success", 'data' => $result);
+        } else {
+            return array('status' => 'failed');
+        }
+
+    }
+
+    public static function rawqueryAction()
     {
         $db     = Database::getInstance();
         $logger = Logger::getInstance();
@@ -20,7 +37,6 @@ class ProductController
         } else {
             return array('status' => 'failed');
         }
-
     }
 
     public static function deleteAction()
@@ -78,7 +94,7 @@ class ProductController
 
         $selected = $db->select("first_table", null, array('email' => '1613423153@.com'), array('name' => 'desc'), 1);
         $logger->info("listing from db", $selected);
-     
+
         if (!empty($selected)) {
             return array('status' => "success", 'data' => $selected);
         } else {

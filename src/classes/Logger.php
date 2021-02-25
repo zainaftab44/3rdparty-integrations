@@ -74,7 +74,7 @@ class Logger
      *
      * @return void
      */
-    public function error($message, $data=null)
+    public function error($message, $data = null)
     {
         $this->write(self::ERROR, func_get_args());
     }
@@ -86,7 +86,7 @@ class Logger
      *
      * @return void
      */
-    public function warn($message, $data=null)
+    public function warn($message, $data = null)
     {
         $this->write(self::WARN, func_get_args());
     }
@@ -98,7 +98,7 @@ class Logger
      *
      * @return void
      */
-    public function notice($message, $data=null)
+    public function notice($message, $data = null)
     {
         $this->write(self::NOTICE, func_get_args());
     }
@@ -110,7 +110,7 @@ class Logger
      *
      * @return void
      */
-    public function alert($message, $data=null)
+    public function alert($message, $data = null)
     {
         $this->write(self::ALERT, func_get_args());
     }
@@ -134,7 +134,7 @@ class Logger
      *
      * @return void
      */
-    public function debug($message, $data=null)
+    public function debug($message, $data = null)
     {
         $this->write(self::DEBUG, func_get_args());
     }
