@@ -12,7 +12,7 @@ class Curl
         $this->_url = $url;
     }
 
-    public function performPost($headers = array())
+    public function performPost($headers = array(), $data = array())
     {
         $curl = curl_init();
 
@@ -25,6 +25,9 @@ class Curl
 
         if (!empty($headers)) {
             curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        }
+        if (!empty($data)) {
+            curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
         }
         try {
             $data = curl_exec($curl);
@@ -50,6 +53,7 @@ class Curl
         curl_setopt_array($curl, array(
             CURLOPT_URL            => $this->_url,
             CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST  => 'GET',
         ));
 
         if (!empty($headers)) {
